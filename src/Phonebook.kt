@@ -1,5 +1,6 @@
 class Phonebook {
-    private val contacts: MutableSet<Contact> = HashSet()
+    val contacts: MutableList<Contact> = ArrayList()
+        get() = field.toMutableList()
 
     fun add(contact: Contact) {
         contacts.add(contact)
@@ -18,9 +19,5 @@ class Phonebook {
             null
         else
             foundContacts
-    }
-
-    fun getAll(): Set<Contact>? {
-        return contacts.toSet()
     }
 }

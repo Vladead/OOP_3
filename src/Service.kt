@@ -1,4 +1,3 @@
-
 class Service {
     private val phonebook: Phonebook = Phonebook()
 
@@ -55,12 +54,12 @@ class Service {
     private fun remove() {
         val foundContacts = search()
         if (foundContacts != null) {
-            for (i in 0..foundContacts.size) {
+            for (i in foundContacts.indices) {
                 println("${i + 1}: " + foundContacts[i].toString())
             }
             println("What contact do you want to delete?")
             val index = readLine()?.toIntOrNull()
-            if (index != null && foundContacts.size <= index)
+            if (index != null && foundContacts.size >= index)
                 phonebook.remove(foundContacts[index - 1])
             else
                 println("Wrong index")
@@ -82,7 +81,7 @@ class Service {
                     println("Addressing nothing!")
                     null
                 }
-                in 1..found.size -> found[i]
+                in 1..found.size -> found[i - 1]
                 else -> {
                     println("Not a number!")
                     null
@@ -90,6 +89,7 @@ class Service {
             }
             if (contact != null) {
                 while (true) {
+                    println(contact.toString())
                     println("What to do? (Add) or (remove) number, (edit name), (edit) number, " +
                             "(edit type) of number, (edit both) or (quit)?")
                     when (readLine()?.toLowerCase()) {
@@ -202,8 +202,7 @@ class Service {
                     "4 - Show contact\n" +
                     "5 - Show all contacts\n" +
                     "6 - Exit")
-            when (readLine())
-            {
+            when (readLine()) {
                 "1" -> add()
                 "2" -> remove()
                 "3" -> edit()

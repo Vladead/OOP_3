@@ -1,6 +1,5 @@
 class Phonebook {
     val contacts: MutableList<Contact> = ArrayList()
-        get() = field.toMutableList()
 
     fun add(contact: Contact) {
         contacts.add(contact)

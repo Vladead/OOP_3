@@ -4,7 +4,6 @@ class Contact {
     var name: String = String()
 
     val numbers: MutableMap<String, NumType> = HashMap()
-//        get() = field.toMutableMap()
 
     constructor(newName: String, newNumber: String, type: NumType) {
         name = newName
@@ -12,7 +11,7 @@ class Contact {
     }
 
     fun contains(subString: String): Boolean {
-        if (name.contains(subString))
+        if (name.toLowerCase().contains(subString))
             return true
         for (i in numbers)
             if (i.key.contains(subString))
@@ -26,11 +25,11 @@ class Contact {
                 throw IllegalArgumentException("Number already added!")
             else {
                 val hasPlus: Int = (number[0] == '+').int
-                if (number.substring(hasPlus..number.length).toLongOrNull() == null)
+                if (number.substring(hasPlus until number.length).toLongOrNull() == null)
                     throw IllegalArgumentException("Incorrect number format")
                 if (number.length > 11 + hasPlus)
                     throw IllegalArgumentException("Nonexistent number")
-                numbers.put(number, type)
+                numbers[number] = type
             }
         } else
             throw IllegalArgumentException("Received empty number!")
@@ -42,7 +41,7 @@ class Contact {
 
     fun editNumber(numberToEdit: String, newNumber: String = String(), newType: NumType? = null) {
         editNumber(numberToEdit, newNumber)
-        editNumber(numberToEdit, newType)
+        editNumber(newNumber, newType)
     }
 
     fun editNumber(numberToEdit: String, newNumber: String = String()) {
@@ -51,7 +50,7 @@ class Contact {
                 throw IllegalArgumentException("Number already added!")
             else {
                 val hasPlus: Int = (newNumber[0] == '+').int
-                if (newNumber.substring(hasPlus..newNumber.length).toLongOrNull() == null)
+                if (newNumber.substring(hasPlus until newNumber.length).toLongOrNull() == null)
                     throw IllegalArgumentException("Incorrect number format")
                 if (newNumber.length > 11 + hasPlus)
                     throw IllegalArgumentException("Nonexistent number")
@@ -59,7 +58,7 @@ class Contact {
                 val type = numbers.remove(numberToEdit)
                         ?: throw IllegalArgumentException("Replacing nonexistent number!")
 
-                numbers.put(newNumber, type)
+                numbers[newNumber] = type
             }
         } else
             throw IllegalArgumentException("Received empty number!")

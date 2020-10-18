@@ -19,7 +19,7 @@ class Service {
             "1" -> NumType.MOBILE
             "2" -> NumType.HOME
             "3" -> NumType.WORK
-            else -> exitProcess(666)
+            else -> return
         }
         val newContact = Contact(name, phoneNumber, numberType)
         loop@ while (true) {
@@ -36,7 +36,7 @@ class Service {
                         "1" -> NumType.MOBILE
                         "2" -> NumType.HOME
                         "3" -> NumType.WORK
-                        else -> exitProcess(666)
+                        else -> return
                     }
                     try {
                         newContact.addNumber(phoneNumber, numberType)
@@ -60,10 +60,10 @@ class Service {
             }
             println("What contact do you want to delete?")
             val index = readLine()?.toIntOrNull()
-            if (index != null)
-                phonebook.remove(foundContacts[index + 1])
+            if (index != null && foundContacts.size <= index)
+                phonebook.remove(foundContacts[index - 1])
             else
-                exitProcess(666)
+                println("Wrong index")
         }
     }
 

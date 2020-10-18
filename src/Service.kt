@@ -6,6 +6,14 @@ class Service {
 
     private var currentContact: Contact? = null
 
+    private fun askName() : String? {
+
+    }
+
+    private fun askType() : String? {
+
+    }
+
     fun add() {
         println("Write name: ")
         val name = readLine()!!
@@ -56,7 +64,7 @@ class Service {
         val foundContacts = search()
         if (foundContacts != null) {
             for (i in 0..foundContacts.size) {
-                println("${i + 1} " + foundContacts[i].toString())
+                println("${i + 1}: " + foundContacts[i].toString())
             }
             println("What contact do you want to delete?")
             val index = readLine()?.toIntOrNull()
@@ -68,7 +76,53 @@ class Service {
     }
 
     fun edit() {
-        TODO("")
+        val found = search()
+        if (found == null)
+            println("Nothing found")
+        else {
+            for (i in found.indices)
+                println("${i + 1}: " + found[i].toString())
+            println("Which one to edit? 0 to exit:\n")
+            val contact = when (readLine()?.toIntOrNull()) {
+                0 -> null
+                !in 1..found.size -> {
+                    println("Addressing nothing!")
+                    null
+                }
+                in 1..found.size -> found
+                else -> {
+                    println("Not a number!")
+                    null
+                }
+            }
+            if (contact != null) {
+                println("What to do? (Add) number, (edit name), (edit) number, (edit type) of number or (edit both)?\n")
+                    when (readLine()?.toLowerCase()) {
+                        "add" -> {
+
+                        }
+                        "edit name" -> {
+
+                        }
+                        "edit type" -> {
+
+                        }
+                        "edit both" -> {
+
+                        }
+                        "edit" -> {
+
+                        }
+                        else -> {
+                            println("Something's wrong\nShut the lights\nHeavy thought tonight")
+                            return
+                        }
+                    }
+            } else {
+                println("Ending the operation...")
+                return
+            }
+        }
     }
 
     fun show() {

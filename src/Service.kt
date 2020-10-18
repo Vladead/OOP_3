@@ -6,24 +6,28 @@ class Service {
 
     private var currentContact: Contact? = null
 
-    private fun askName() : String? {
-
-    }
-
-    private fun askType() : String? {
-
-    }
-
-    fun add() {
+    private fun askName() : String {
         println("Write name: ")
-        val name = readLine()!!
+        return readLine()!!
+    }
+
+    private fun askNumber() : String {
         println("Write number: ")
-        var phoneNumber = readLine()!!
+        return readLine()!!
+    }
+
+    private fun askType() : String {
         println("Write number type:\n" +
                 "1 - Mobile\n" +
                 "2 - Home\n" +
                 "3 - Work\n")
-        var numberType = when (readLine()!!) {
+        return readLine()!!
+    }
+
+    fun add() {
+        val name = askName()
+        var phoneNumber = askNumber()
+        var numberType = when (askType()) {
             "1" -> NumType.MOBILE
             "2" -> NumType.HOME
             "3" -> NumType.WORK
@@ -34,13 +38,8 @@ class Service {
             println("Do you want to add another number? yes/no")
             when (readLine()!!.toLowerCase()) {
                 "yes" -> {
-                    println("Write number: ")
-                    phoneNumber = readLine()!!
-                    println("Write number type:\n" +
-                            "1 - Mobile\n" +
-                            "2 - Home\n" +
-                            "3 - Work\n")
-                    numberType = when (readLine()!!) {
+                    phoneNumber = askNumber()
+                    numberType = when (askType()) {
                         "1" -> NumType.MOBILE
                         "2" -> NumType.HOME
                         "3" -> NumType.WORK

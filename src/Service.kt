@@ -62,10 +62,10 @@ class Service {
             }
             println("What contact do you want to delete?")
             val index = readLine()?.toIntOrNull()
-            if (index != null)
-                phonebook.remove(foundContacts[index + 1])
+            if (index != null && foundContacts.size <= index)
+                phonebook.remove(foundContacts[index - 1])
             else
-                exitProcess(666)
+                println("Wrong index")
         }
     }
 

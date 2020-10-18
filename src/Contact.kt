@@ -3,7 +3,7 @@ import kotlin.collections.HashMap
 class Contact {
     var name: String = String()
 
-    private val numbers: MutableMap<String, NumType> = HashMap()
+    val numbers: MutableMap<String, NumType> = HashMap()
         get() = field.toMutableMap()
 
     constructor(newName: String, newNumber: String, type: NumType) {

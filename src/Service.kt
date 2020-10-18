@@ -4,47 +4,42 @@ import kotlin.system.exitProcess
 class Service {
     private val phonebook: Phonebook = Phonebook()
 
-    private var currentContact: Contact? = null
-
-    private fun askName() : String {
+    private fun askName(): String {
         println("Write name: ")
         return readLine()!!
     }
 
-    private fun askNumber() : String {
+    private fun askNumber(): String {
         println("Write number: ")
         return readLine()!!
     }
 
-    private fun askType() : String {
+    private fun askType(): NumType {
         println("Write number type:\n" +
                 "1 - Mobile\n" +
                 "2 - Home\n" +
                 "3 - Work\n")
-        return readLine()!!
+        loop@ while (true) {
+            return when (readLine()!!) {
+                "1" -> NumType.MOBILE
+                "2" -> NumType.HOME
+                "3" -> NumType.WORK
+                else -> continue@loop
+            }
+        }
     }
 
     fun add() {
         val name = askName()
         var phoneNumber = askNumber()
-        var numberType = when (askType()) {
-            "1" -> NumType.MOBILE
-            "2" -> NumType.HOME
-            "3" -> NumType.WORK
-            else -> exitProcess(666)
-        }
+        var numberType = askType()
         val newContact = Contact(name, phoneNumber, numberType)
         loop@ while (true) {
             println("Do you want to add another number? yes/no")
             when (readLine()!!.toLowerCase()) {
                 "yes" -> {
                     phoneNumber = askNumber()
-                    numberType = when (askType()) {
-                        "1" -> NumType.MOBILE
-                        "2" -> NumType.HOME
-                        "3" -> NumType.WORK
-                        else -> exitProcess(666)
-                    }
+                    numberType = askType()
                     try {
                         newContact.addNumber(phoneNumber, numberType)
                     } catch (e: IllegalArgumentException) {
@@ -97,22 +92,60 @@ class Service {
             }
             if (contact != null) {
                 while (true) {
-                    println("What to do? (Add) number, (edit name), (edit) number, (edit type) of number, (edit both) or (quit)?\n")
+                    println("What to do? (Add) number, (edit name), (edit) number, " +
+                            "(edit type) of number, (edit both) or (quit)?\n")
                     when (readLine()?.toLowerCase()) {
                         "add" -> {
-
+                            val newNum = askNumber()
+                            val newType = askType()
+                            try {
+                                contact.addNumber(newNum, newType)
+                                println("Added successfully!")
+                            } catch (e: Exception) {
+                                println(e.message)
+                            }
                         }
                         "edit name" -> {
-
+                            contact.name = askName()
                         }
                         "edit type" -> {
-
+                            val newType = askType()
+                            println("Of which one? (1, 2, ...)")
+                            var numNum: Int? = null
+                            while (numNum !in 1..contact.numbers.size) {
+                                numNum = readLine()?.toInt()
+                            }
+                            // Hellish shit extracts by it's number number and uses it
+                            contact.editNumber(contact.numbers.toList()[numNum!! - 1].first, newType)
                         }
                         "edit both" -> {
-
+                            val newType = askType()
+                            val newNum = askNumber()
+                            println("Which one? (1, 2, ...)")
+                            var numNum: Int? = null
+                            while (numNum !in 1..contact.numbers.size) {
+                                numNum = readLine()?.toInt()
+                            }
+                            // Hellish shit extracts by it's number number and uses it
+                            try {
+                                contact.editNumber(contact.numbers.toList()[numNum!! - 1].first, newNum, newType)
+                            } catch (e: Exception) {
+                                println(e.message)
+                            }
                         }
                         "edit" -> {
-
+                            val newNum = askNumber()
+                            println("Which one? (1, 2, ...)")
+                            var numNum: Int? = null
+                            while (numNum !in 1..contact.numbers.size) {
+                                numNum = readLine()?.toInt()
+                            }
+                            // Hellish shit extracts by it's number number and uses it
+                            try {
+                                contact.editNumber(contact.numbers.toList()[numNum!! - 1].first, newNum)
+                            } catch (e: Exception) {
+                                println(e.message)
+                            }
                         }
                         "quit" -> {
                             return

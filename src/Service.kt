@@ -6,11 +6,15 @@ class Service {
 
     private var currentContact: Contact? = null
 
-    private fun askName() : String? {
+    private fun askName(): String {
 
     }
 
-    private fun askType() : String? {
+    private fun askType(): String {
+
+    }
+
+    private fun askNum(): String {
 
     }
 
@@ -77,26 +81,28 @@ class Service {
 
     fun edit() {
         val found = search()
-        if (found == null)
+        if (found == null) {
             println("Nothing found")
-        else {
+            return
+        } else {
             for (i in found.indices)
                 println("${i + 1}: " + found[i].toString())
             println("Which one to edit? 0 to exit:\n")
-            val contact = when (readLine()?.toIntOrNull()) {
+            val contact = when (val i = readLine()?.toIntOrNull()!!) {
                 0 -> null
                 !in 1..found.size -> {
                     println("Addressing nothing!")
                     null
                 }
-                in 1..found.size -> found
+                in 1..found.size -> found[i]
                 else -> {
                     println("Not a number!")
                     null
                 }
             }
             if (contact != null) {
-                println("What to do? (Add) number, (edit name), (edit) number, (edit type) of number or (edit both)?\n")
+                while (true) {
+                    println("What to do? (Add) number, (edit name), (edit) number, (edit type) of number, (edit both) or (quit)?\n")
                     when (readLine()?.toLowerCase()) {
                         "add" -> {
 
@@ -113,11 +119,14 @@ class Service {
                         "edit" -> {
 
                         }
-                        else -> {
-                            println("Something's wrong\nShut the lights\nHeavy thought tonight")
+                        "quit" -> {
                             return
                         }
+                        else -> {
+                            println("Something's wrong\nGet it right\nNo mistake this time\n")
+                        }
                     }
+                }
             } else {
                 println("Ending the operation...")
                 return

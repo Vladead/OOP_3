@@ -1,5 +1,3 @@
-import java.lang.IllegalArgumentException
-import kotlin.system.exitProcess
 
 class Service {
     private val phonebook: Phonebook = Phonebook()
@@ -18,7 +16,7 @@ class Service {
         println("Write number type:\n" +
                 "1 - Mobile\n" +
                 "2 - Home\n" +
-                "3 - Work\n")
+                "3 - Work")
         loop@ while (true) {
             return when (readLine()!!) {
                 "1" -> NumType.MOBILE
@@ -29,7 +27,7 @@ class Service {
         }
     }
 
-    fun add() {
+    private fun add() {
         val name = askName()
         var phoneNumber = askNumber()
         var numberType = askType()
@@ -54,7 +52,7 @@ class Service {
         phonebook.add(newContact)
     }
 
-    fun remove() {
+    private fun remove() {
         val foundContacts = search()
         if (foundContacts != null) {
             for (i in 0..foundContacts.size) {
@@ -69,7 +67,7 @@ class Service {
         }
     }
 
-    fun edit() {
+    private fun edit() {
         val found = search()
         if (found == null) {
             println("Nothing found")
@@ -77,7 +75,7 @@ class Service {
         } else {
             for (i in found.indices)
                 println("${i + 1}: " + found[i].toString())
-            println("Which one to edit? 0 to exit:\n")
+            println("Which one to edit? 0 to exit:")
             val contact = when (val i = readLine()?.toIntOrNull()!!) {
                 0 -> null
                 !in 1..found.size -> {
@@ -93,7 +91,7 @@ class Service {
             if (contact != null) {
                 while (true) {
                     println("What to do? (Add) number, (edit name), (edit) number, " +
-                            "(edit type) of number, (edit both) or (quit)?\n")
+                            "(edit type) of number, (edit both) or (quit)?")
                     when (readLine()?.toLowerCase()) {
                         "add" -> {
                             val newNum = askNumber()
@@ -115,7 +113,6 @@ class Service {
                             while (numNum !in 1..contact.numbers.size) {
                                 numNum = readLine()?.toInt()
                             }
-                            // Hellish shit extracts by it's number number and uses it
                             contact.editNumber(contact.numbers.toList()[numNum!! - 1].first, newType)
                         }
                         "edit both" -> {
@@ -126,7 +123,6 @@ class Service {
                             while (numNum !in 1..contact.numbers.size) {
                                 numNum = readLine()?.toInt()
                             }
-                            // Hellish shit extracts by it's number number and uses it
                             try {
                                 contact.editNumber(contact.numbers.toList()[numNum!! - 1].first, newNum, newType)
                             } catch (e: Exception) {
@@ -140,7 +136,6 @@ class Service {
                             while (numNum !in 1..contact.numbers.size) {
                                 numNum = readLine()?.toInt()
                             }
-                            // Hellish shit extracts by it's number number and uses it
                             try {
                                 contact.editNumber(contact.numbers.toList()[numNum!! - 1].first, newNum)
                             } catch (e: Exception) {
@@ -151,7 +146,9 @@ class Service {
                             return
                         }
                         else -> {
-                            println("Something's wrong\nGet it right\nNo mistake this time\n")
+                            println("Something's wrong\n" +
+                                    "Get it right\n" +
+                                    "No mistake this time")
                         }
                     }
                 }
@@ -162,7 +159,7 @@ class Service {
         }
     }
 
-    fun show() {
+    private fun show() {
         val foundContacts = search()
         if (foundContacts == null)
             println("Nothing was found!")
@@ -172,15 +169,38 @@ class Service {
         }
     }
 
-    fun showAll() {
+    private fun showAll() {
         val contacts = phonebook.contacts
         for (i in contacts.indices)
             println("${i + 1}: " + contacts[i].toString())
     }
 
     private fun search(): MutableList<Contact>? {
-        println("What are we looking for?\n")
+        println("What are we looking for?")
         val subStr = readLine() ?: throw IllegalArgumentException("Nothing was entered!")
         return phonebook.search(subStr)
+    }
+
+    fun begin() {
+        loop@ while (true) {
+            println("What do you want?\n" +
+                    "1 - Add contact\n" +
+                    "2 - Remove contact\n" +
+                    "3 - Edit contact\n" +
+                    "4 - Show contact\n" +
+                    "5 - Show all contacts\n" +
+                    "6 - Exit")
+            when (readLine())
+            {
+                "1" -> add()
+                "2" -> remove()
+                "3" -> edit()
+                "4" -> show()
+                "5" -> showAll()
+                "6" -> return
+                else -> println("Try once more")
+            }
+        }
+
     }
 }

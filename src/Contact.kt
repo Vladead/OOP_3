@@ -4,7 +4,7 @@ class Contact {
     var name: String = String()
 
     val numbers: MutableMap<String, NumType> = HashMap()
-        get() = field.toMutableMap()
+//        get() = field.toMutableMap()
 
     constructor(newName: String, newNumber: String, type: NumType) {
         name = newName
@@ -30,7 +30,7 @@ class Contact {
                     throw IllegalArgumentException("Incorrect number format")
                 if (number.length > 11 + hasPlus)
                     throw IllegalArgumentException("Nonexistent number")
-                numbers[number] = type
+                numbers.put(number, type)
             }
         } else
             throw IllegalArgumentException("Received empty number!")
@@ -59,7 +59,7 @@ class Contact {
                 val type = numbers.remove(numberToEdit)
                         ?: throw IllegalArgumentException("Replacing nonexistent number!")
 
-                numbers[newNumber] = type
+                numbers.put(newNumber, type)
             }
         } else
             throw IllegalArgumentException("Received empty number!")

@@ -90,7 +90,7 @@ class Service {
             }
             if (contact != null) {
                 while (true) {
-                    println("What to do? (Add) number, (edit name), (edit) number, " +
+                    println("What to do? (Add) or (remove) number, (edit name), (edit) number, " +
                             "(edit type) of number, (edit both) or (quit)?")
                     when (readLine()?.toLowerCase()) {
                         "add" -> {
@@ -138,6 +138,18 @@ class Service {
                             }
                             try {
                                 contact.editNumber(contact.numbers.toList()[numNum!! - 1].first, newNum)
+                            } catch (e: Exception) {
+                                println(e.message)
+                            }
+                        }
+                        "remove" -> {
+                            println("Which one? (1, 2, ...)")
+                            var numNum: Int? = null
+                            while (numNum !in 1..contact.numbers.size) {
+                                numNum = readLine()?.toInt()
+                            }
+                            try {
+                                contact.removeNumber(contact.numbers.toList()[numNum!! - 1].first)
                             } catch (e: Exception) {
                                 println(e.message)
                             }
@@ -197,10 +209,9 @@ class Service {
                 "3" -> edit()
                 "4" -> show()
                 "5" -> showAll()
-                "6" -> return
+                "6" -> break@loop
                 else -> println("Try once more")
             }
         }
-
     }
 }

@@ -5,6 +5,7 @@ class Contact {
     var name: String = String()
 
     private val numbers: MutableMap<String, NumType> = HashMap()
+        get() = field.toMutableMap()
 
     constructor(newName: String, newNumber: String, type: NumType) {
         name = newName
@@ -41,17 +42,29 @@ class Contact {
     }
 
     override fun equals(other: Any?): Boolean {
-        TODO("Влад = потом")
-        return super.equals(other)
+        if (this === other)
+            return true
+        if (other !is Contact)
+            return false
+        else
+        {
+            if (name !=  other.name)
+                return false
+            if (numbers != other.numbers)
+                return false
+            return true
+        }
     }
 
     override fun hashCode(): Int {
-        TODO("Влад = потом")
-        return super.hashCode()
+        return name.hashCode()
     }
 
     override fun toString(): String {
-        TODO("Влад = потом")
-        return super.toString()
+        var stringRepresentation: String = name + '\n'
+        for (i in numbers)
+            stringRepresentation += i.key + ' ' + i.value + '\n'
+        
+        return stringRepresentation
     }
 }

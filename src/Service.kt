@@ -68,6 +68,8 @@ class Service {
     }
 
     fun edit() {
+        TODO("")
+    }
 
     fun show() {
         val foundContacts = search()

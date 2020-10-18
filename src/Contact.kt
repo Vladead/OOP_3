@@ -74,9 +74,8 @@ class Contact {
             return true
         if (other !is Contact)
             return false
-        else
-        {
-            if (name !=  other.name)
+        else {
+            if (name != other.name)
                 return false
             if (numbers != other.numbers)
                 return false
@@ -91,8 +90,8 @@ class Contact {
     override fun toString(): String {
         var stringRepresentation: String = name + '\n'
         for (i in numbers)
-            stringRepresentation += i.key + ' ' + i.value + '\n'
-        
+            stringRepresentation += "    " + i.key + ' ' + i.value + '\n'
+
         return stringRepresentation
     }
 

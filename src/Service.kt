@@ -16,14 +16,24 @@ class Service {
     }
 
     fun show() {
-        TODO("Влад допишет")
+        val foundContacts = search()
+        if (foundContacts == null)
+            println("Nothing was found!")
+        else {
+            for (i in foundContacts.indices)
+                println("${i + 1}: " + foundContacts[i].toString())
+        }
     }
 
     fun showAll() {
-        TODO("Влад допишет")
+        val contacts = phonebook.contacts
+        for (i in contacts.indices)
+            println("${i + 1}: " + contacts[i].toString())
     }
 
-    fun search(subStr: String) {
-        TODO("Влад допишет")
+    private fun search(): MutableList<Contact>? {
+        println("What are we looking for?\n")
+        val subStr = readLine() ?: throw IllegalArgumentException("Nothing was entered!")
+        return phonebook.search(subStr)
     }
 }

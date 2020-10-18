@@ -1,5 +1,6 @@
 class Phonebook {
-    private val contacts: MutableSet<Contact> = HashSet()
+    val contacts: MutableList<Contact> = ArrayList()
+        get() = field.toMutableList()
 
     fun add(contact: Contact) {
         contacts.add(contact)
@@ -9,8 +10,8 @@ class Phonebook {
         contacts.remove(contact)
     }
 
-    fun search(subString: String): ArrayList<Contact>? {
-        val foundContacts: ArrayList<Contact> = ArrayList()
+    fun search(subString: String): MutableList<Contact>? {
+        val foundContacts: MutableList<Contact> = ArrayList()
         for (i in contacts)
             if (i.contains(subString))
                 foundContacts.add(i)
@@ -18,9 +19,5 @@ class Phonebook {
             null
         else
             foundContacts
-    }
-
-    fun getAll(): Set<Contact>? {
-        return contacts.toSet()
     }
 }

@@ -182,7 +182,7 @@ class Service {
     }
 
     private fun showAll() {
-        val contacts = phonebook.contacts
+        val contacts = phonebook.getContacts()
         for (i in contacts.indices)
             println("${i + 1}: " + contacts[i].toString())
     }
